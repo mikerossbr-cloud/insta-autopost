@@ -1,0 +1,7 @@
+{
+  "scheduled_at": "2099-01-01T09:00:00-03:00",
+  "type": "auto",
+  "media": ["imagem.jpg"],
+  "caption": "Exemplo de legenda. Este post é só um modelo e nunca será publicado (data em 2099).\n\n#exemplo",
+  "status": "rascunho"
+}
