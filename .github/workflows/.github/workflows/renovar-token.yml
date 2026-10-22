@@ -1,0 +1,26 @@
+name: Renovar token do Instagram
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+
+jobs:
+  renovar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pedir token novo ao Instagram e salvar no segredo
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          REPO: ${{ github.repository }}
+        run: |
+          RESP=$(curl -s "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${IG_ACCESS_TOKEN}")
+          NEW=$(echo "$RESP" | jq -r '.access_token // empty')
+          if [ -z "$NEW" ]; then
+            echo "Falha ao renovar: $(echo "$RESP" | jq -c '.error // .')"
+            exit 1
+          fi
+          echo "::add-mask::$NEW"
+          gh secret set IG_ACCESS_TOKEN --repo "$REPO" --body "$NEW"
+          echo "Token renovado. Validade: $(echo "$RESP" | jq -r '.expires_in') segundos."
