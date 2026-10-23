@@ -1,5 +1,7 @@
 name: Renovar token do Instagram
 
+# Os tokens do Instagram vencem em 60 dias. Renovamos toda semana, para cada conta
+# listada em insta-autopost/contas.json.
 on:
   schedule:
     - cron: "0 12 * * 1"
@@ -9,18 +11,30 @@ jobs:
   renovar:
     runs-on: ubuntu-latest
     steps:
-      - name: Pedir token novo ao Instagram e salvar no segredo
+      - uses: actions/checkout@v4
+
+      - name: Pedir token novo ao Instagram para cada conta
         env:
-          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_SECRETS: ${{ toJSON(secrets) }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           REPO: ${{ github.repository }}
         run: |
-          RESP=$(curl -s "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${IG_ACCESS_TOKEN}")
-          NEW=$(echo "$RESP" | jq -r '.access_token // empty')
-          if [ -z "$NEW" ]; then
-            echo "Falha ao renovar: $(echo "$RESP" | jq -c '.error // .')"
-            exit 1
-          fi
-          echo "::add-mask::$NEW"
-          gh secret set IG_ACCESS_TOKEN --repo "$REPO" --body "$NEW"
-          echo "Token renovado. Validade: $(echo "$RESP" | jq -r '.expires_in') segundos."
+          FALHAS=0
+          for CONTA in $(jq -r 'keys[]' insta-autopost/contas.json); do
+            SECRET=$(jq -r --arg c "$CONTA" '.[$c].secret' insta-autopost/contas.json)
+            TOKEN=$(echo "$IG_SECRETS" | jq -r --arg s "$SECRET" '.[$s] // empty')
+            if [ -z "$TOKEN" ]; then
+              echo "@$CONTA: segredo $SECRET não encontrado"
+              FALHAS=$((FALHAS+1)); continue
+            fi
+            RESP=$(curl -s "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${TOKEN}")
+            NEW=$(echo "$RESP" | jq -r '.access_token // empty')
+            if [ -z "$NEW" ]; then
+              echo "@$CONTA: falha ao renovar: $(echo "$RESP" | jq -c '.error // .')"
+              FALHAS=$((FALHAS+1)); continue
+            fi
+            echo "::add-mask::$NEW"
+            gh secret set "$SECRET" --repo "$REPO" --body "$NEW"
+            echo "@$CONTA: token renovado. Validade: $(echo "$RESP" | jq -r '.expires_in') segundos."
+          done
+          [ "$FALHAS" -eq 0 ]
