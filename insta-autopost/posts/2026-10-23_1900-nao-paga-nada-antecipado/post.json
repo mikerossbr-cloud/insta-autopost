@@ -5,5 +5,6 @@
     "capa.jpg"
   ],
   "caption": "O que mais trava gente que perdeu dinheiro em bet é achar que vai ter que desembolsar advogado pra correr atrás. Não vai.\n\nO escritório trabalha só no êxito. Você não paga honorário antecipado, nem consulta, nem análise.\n\nO único custo são as custas judiciais, que são pagas direto ao tribunal e variam de 1% a 2% do valor da ação, dependendo do estado. E dá pra pedir justiça gratuita se você comprovar que não tem condição de arcar com isso.\n\nOu seja: dá pra descobrir se você tem caso sem gastar nada.\n\nManda o seu extrato de 2024 pra cá que eu te falo com honestidade se existe caminho jurídico ou não. Se não tiver, eu te falo também.\n\nPerda líquida acima de R$ 100 mil: me chama na DM.\n\n#bets #apostasonline #ludopatia #vicioemapostas #direitodoconsumidor #recuperacaodevalores",
-  "status": "agendado"
+  "status": "erro",
+  "error": "Erro da API (400): {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'fbtrace_id': 'APWhIKk0WUt9ISPa_X0cTtr'}}"
 }
