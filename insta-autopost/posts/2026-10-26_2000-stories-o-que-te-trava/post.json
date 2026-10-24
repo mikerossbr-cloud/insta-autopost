@@ -1,0 +1,14 @@
+{
+  "scheduled_at": "2026-10-26T20:00:00-03:00",
+  "type": "story",
+  "media": [
+    "story01.jpg",
+    "story02.jpg",
+    "story03.jpg",
+    "story04.jpg",
+    "story05.jpg",
+    "story06.jpg",
+    "story07.jpg"
+  ],
+  "status": "agendado"
+}
