@@ -3,6 +3,7 @@ name: Renovar token do Instagram
 
 # Os tokens do Instagram vencem em 60 dias. Renovamos toda semana, para cada conta
 # listada em insta-autopost/contas.json.
+# Ao cadastrar uma conta nova, adicione o segredo dela no bloco env abaixo.
 on:
   schedule:
     - cron: "0 12 * * 1"
@@ -16,16 +17,17 @@ jobs:
 
       - name: Pedir token novo ao Instagram para cada conta
         env:
-          IG_SECRETS: ${{ toJSON(secrets) }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_TOKEN_MIKEROSSBR2: ${{ secrets.IG_TOKEN_MIKEROSSBR2 }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           REPO: ${{ github.repository }}
         run: |
           FALHAS=0
           for CONTA in $(jq -r 'keys[]' insta-autopost/contas.json); do
             SECRET=$(jq -r --arg c "$CONTA" '.[$c].secret' insta-autopost/contas.json)
-            TOKEN=$(echo "$IG_SECRETS" | jq -r --arg s "$SECRET" '.[$s] // empty')
+            TOKEN="${!SECRET}"
             if [ -z "$TOKEN" ]; then
-              echo "@$CONTA: segredo $SECRET não encontrado"
+              echo "@$CONTA: segredo $SECRET não encontrado (falta no bloco env?)"
               FALHAS=$((FALHAS+1)); continue
             fi
             RESP=$(curl -s "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${TOKEN}")
