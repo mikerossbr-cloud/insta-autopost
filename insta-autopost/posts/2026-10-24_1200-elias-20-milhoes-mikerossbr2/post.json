@@ -11,6 +11,14 @@
   "contas": [
     "mikerossbr2"
   ],
-  "status": "publicando",
-  "copia_de": "2026-10-23_1400-elias-20-milhoes"
+  "status": "publicado",
+  "copia_de": "2026-10-23_1400-elias-20-milhoes",
+  "resultado": {
+    "mikerossbr2": {
+      "status": "publicado",
+      "instagram_media_id": "18095310119664876",
+      "published_at": "2026-10-24T15:17:46.448523+00:00"
+    }
+  },
+  "published_at": "2026-10-24T15:16:55.273304+00:00"
 }
