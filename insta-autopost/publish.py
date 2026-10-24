@@ -23,6 +23,7 @@ Variáveis de ambiente:
 
 import json
 import os
+import subprocess
 import sys
 import time
 from datetime import datetime, timezone
@@ -167,6 +168,46 @@ def load_tokens() -> dict:
     return secrets
 
 
+# --- sincronização com o repositório (só dentro do GitHub Actions) -----------------
+# Evita post duplicado: cada execução busca a fila mais recente antes de publicar,
+# "reserva" o post (status publicando) e salva o resultado logo em seguida.
+GIT_SYNC = os.environ.get("GITHUB_ACTIONS") == "true" and not DRY_RUN
+REPO_DIR = BASE_DIR.parent
+
+
+def git(*args, check=True):
+    return subprocess.run(["git", *args], cwd=REPO_DIR, check=check,
+                          capture_output=True, text=True)
+
+
+def git_sync():
+    """Descarta o estado local e pega a versão mais recente da branch main."""
+    if not GIT_SYNC:
+        return
+    git("fetch", "--quiet", "origin", "main")
+    git("reset", "--quiet", "--hard", "FETCH_HEAD")
+
+
+def git_save(path: Path, msg: str) -> bool:
+    """Grava a mudança de um post e envia. Retorna False se não conseguiu enviar."""
+    if not GIT_SYNC:
+        return True
+    git("add", str(path))
+    if git("diff", "--cached", "--quiet", check=False).returncode == 0:
+        return True
+    git("-c", "user.name=robo-instagram",
+        "-c", "user.email=robo-instagram@users.noreply.github.com",
+        "commit", "--quiet", "-m", msg)
+    for _ in range(4):
+        if git("push", "--quiet", "origin", "HEAD:main", check=False).returncode == 0:
+            return True
+        if git("pull", "--quiet", "--rebase", "origin", "main", check=False).returncode != 0:
+            git("rebase", "--abort", check=False)
+            return False
+        time.sleep(2)
+    return False
+
+
 def contas_do_post(post: dict, contas: dict) -> list:
     escolhidas = post.get("contas")
     if escolhidas is None:
@@ -186,6 +227,7 @@ def main():
     changed = False
     failures = 0
 
+    git_sync()
     for pj in sorted(POSTS_DIR.glob("*/post.json")):
         post = json.loads(pj.read_text(encoding="utf-8"))
         if post.get("status", "agendado") != "agendado":
@@ -203,6 +245,19 @@ def main():
         print(f"Publicando: {pj.parent.name} -> {', '.join('@' + a for a in alvos)}")
         if DRY_RUN:
             print("  (simulação, nada foi publicado)")
+            continue
+
+        # confere de novo na fila mais recente e reserva o post antes de publicar
+        git_sync()
+        post = json.loads(pj.read_text(encoding="utf-8")) if pj.exists() else {}
+        if post.get("status", "agendado") != "agendado":
+            print("  já tratado por outra execução, pulando")
+            continue
+        post["status"] = "publicando"
+        pj.write_text(json.dumps(post, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        if not git_save(pj, f"Publicando {pj.parent.name}"):
+            print("  não consegui reservar o post (fila mudou), fica para a próxima rodada")
+            git_sync()
             continue
 
         resultado = post.setdefault("resultado", {})
@@ -242,6 +297,9 @@ def main():
             post["published_at"] = now.isoformat()
             post.pop("error", None)
         pj.write_text(json.dumps(post, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        if not git_save(pj, f"Status de {pj.parent.name}: {post['status']}"):
+            print("  AVISO: não consegui salvar o status no repositório")
+            failures += 1
         changed = True
 
     if not changed:
