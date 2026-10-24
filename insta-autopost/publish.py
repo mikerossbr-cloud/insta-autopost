@@ -12,6 +12,7 @@ segredo do GitHub que guarda o token dela:
     "outraconta":  {"secret": "IG_TOKEN_OUTRACONTA"}
   }
 No post.json, "contas": ["mikerossbr3", "outraconta"] escolhe onde publicar.
+"type": "story" publica cada arquivo de "media" como um story, na ordem.
 Sem esse campo, o post vai para as contas marcadas com "padrao": true.
 
 Variáveis de ambiente:
@@ -37,6 +38,7 @@ CONTAS_FILE = BASE_DIR / "contas.json"
 MEDIA_BASE_URL = os.environ.get("MEDIA_BASE_URL", "").rstrip("/")
 DRY_RUN = os.environ.get("DRY_RUN") == "1"
 POLL_SECONDS = float(os.environ.get("POLL_SECONDS", "5"))
+STORY_GAP_SECONDS = float(os.environ.get("STORY_GAP_SECONDS", "20"))
 
 VIDEO_EXT = {".mp4", ".mov"}
 
@@ -100,11 +102,27 @@ def post_kind(post: dict) -> str:
     return kind
 
 
-def publish(api: InstagramAPI, post_dir: Path, post: dict) -> str:
+def publish_stories(api: InstagramAPI, post_dir: Path, files: list, feitos: list) -> str:
+    """Publica cada arquivo como um story, na ordem. `feitos` guarda os ids já
+    publicados, para uma nova tentativa continuar de onde parou sem repetir."""
+    for i, f in enumerate(files):
+        if i < len(feitos):
+            continue
+        is_video = Path(f).suffix.lower() in VIDEO_EXT
+        cid = api.create_item(media_url(post_dir, f), is_video, media_type="STORIES")
+        feitos.append(api.publish_container(cid))
+        if i < len(files) - 1:
+            time.sleep(STORY_GAP_SECONDS)  # garante a ordem da sequência
+    return feitos[-1]
+
+
+def publish(api: InstagramAPI, post_dir: Path, post: dict, feitos=None) -> str:
     files = post["media"]
     caption = post.get("caption", "")
     kind = post_kind(post)
 
+    if kind == "story":
+        return publish_stories(api, post_dir, files, feitos if feitos is not None else [])
     if kind == "image":
         cid = api.create_item(media_url(post_dir, files[0]), False, caption=caption)
     elif kind == "reel":
@@ -192,6 +210,8 @@ def main():
             if resultado.get(conta, {}).get("status") == "publicado":
                 print(f"  @{conta}: já publicado antes, pulando")
                 continue
+            # stories já publicados numa tentativa anterior (para não repetir)
+            feitos = list(resultado.get(conta, {}).get("stories_publicados", []))
             try:
                 cfg = contas.get(conta)
                 if not cfg:
@@ -199,12 +219,16 @@ def main():
                 token = tokens.get(cfg["secret"])
                 if not token:
                     raise ValueError(f"Segredo {cfg['secret']} não encontrado no GitHub")
-                media_id = publish(InstagramAPI(token), pj.parent, post)
+                media_id = publish(InstagramAPI(token), pj.parent, post, feitos)
                 resultado[conta] = {"status": "publicado", "instagram_media_id": media_id,
                                     "published_at": datetime.now(timezone.utc).isoformat()}
+                if feitos:
+                    resultado[conta]["stories_publicados"] = feitos
                 print(f"  @{conta}: OK, id {media_id}")
             except Exception as e:  # uma conta com erro não impede as outras
                 resultado[conta] = {"status": "erro", "error": str(e)[:500]}
+                if feitos:
+                    resultado[conta]["stories_publicados"] = feitos
                 print(f"  @{conta}: ERRO: {e}")
 
         erros = {c: r["error"] for c, r in resultado.items()

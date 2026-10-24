@@ -25,7 +25,8 @@ Pasta: `posts/2026-11-03_1830-nome-do-post/`
 ```
 
 - `scheduled_at`: data e hora com fuso (`-03:00` = Brasília).
-- `type`: `auto` decide sozinho (1 imagem = foto, 1 vídeo = reels, vários arquivos = carrossel). Também aceita `image`, `reel`, `carousel`.
+- `type`: `auto` decide sozinho (1 imagem = foto, 1 vídeo = reels, vários arquivos = carrossel). Também aceita `image`, `reel`, `carousel` e `story`.
+- Stories (`"type": "story"`): cada arquivo de `media` vira um story, publicado na ordem (JPG ou MP4 vertical 1080×1920, vídeo até 60 s). Legenda é ignorada; o texto precisa estar na arte. A API não permite figurinhas (enquete, caixinha, link, música).
 - `media`: arquivos na mesma pasta, na ordem em que aparecem. Imagens em JPG. Carrossel de 2 a 10 itens.
 - `status`:
   - `rascunho`: o robô ignora.
