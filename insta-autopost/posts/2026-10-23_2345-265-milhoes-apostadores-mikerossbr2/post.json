@@ -13,6 +13,14 @@
   "contas": [
     "mikerossbr2"
   ],
-  "status": "publicando",
-  "copia_de": "2026-10-22_1900-265-milhoes-apostadores"
+  "status": "publicado",
+  "copia_de": "2026-10-22_1900-265-milhoes-apostadores",
+  "resultado": {
+    "mikerossbr2": {
+      "status": "publicado",
+      "instagram_media_id": "18102885419641517",
+      "published_at": "2026-10-24T12:45:56.862866+00:00"
+    }
+  },
+  "published_at": "2026-10-24T12:43:47.057571+00:00"
 }
