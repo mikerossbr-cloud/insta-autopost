@@ -13,6 +13,14 @@
   "contas": [
     "mikerossbr2"
   ],
-  "status": "publicando",
-  "copia_de": "2026-10-22_2200-drible-das-camisas"
+  "status": "publicado",
+  "copia_de": "2026-10-22_2200-drible-das-camisas",
+  "resultado": {
+    "mikerossbr2": {
+      "status": "publicado",
+      "instagram_media_id": "18102110597529748",
+      "published_at": "2026-10-24T13:54:35.519626+00:00"
+    }
+  },
+  "published_at": "2026-10-24T13:53:26.227768+00:00"
 }
