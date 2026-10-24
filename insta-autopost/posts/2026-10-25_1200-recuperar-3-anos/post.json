@@ -1,10 +1,9 @@
 {
-  "scheduled_at": "2026-10-23T09:00:00-03:00",
+  "scheduled_at": "2026-10-25T12:00:00-03:00",
   "type": "image",
   "media": [
     "capa.jpg"
   ],
   "caption": "Muita gente que perdeu dinheiro em bet acha que não tem nada a fazer. Tem.\n\nA Lei das Bets declara nulas as apostas feitas por quem tem ludopatia, que é transtorno reconhecido pela OMS. Nulo quer dizer que, juridicamente, aquilo não valeu. E o que não valeu, se devolve.\n\nJá existem sentenças mandando plataforma restituir valor cheio, mais danos morais.\n\nO que a gente precisa olhar pra saber se o seu caso tem base:\n— o extrato bancário de 2024 pra cá\n— a sua perda líquida, que é o que entrou menos o que voltou em prêmio\n— laudo de ludopatia (se você não tem, a gente indica onde fazer)\n\nA análise é gratuita e o escritório não cobra nada antecipado. Só recebe em caso de vitória.\n\nSe a sua perda líquida passou de R$ 100 mil, me chama na DM que eu olho seu caso.\n\n#bets #apostasonline #ludopatia #vicioemapostas #direitodoconsumidor #recuperacaodevalores",
-  "status": "erro",
-  "error": "Erro da API (400): {'error': {'message': 'Media ID is not available', 'type': 'OAuthException', 'code': 9007, 'error_subcode': 2207027, 'is_transient': False, 'error_user_title': 'Cannot Publish', 'error_user_msg': 'The media is not ready for publishing, please wait for a moment', 'fbtrace_id': 'ATQajY-rwpKJU-it3bwVv7j'}}"
+  "status": "agendado"
 }

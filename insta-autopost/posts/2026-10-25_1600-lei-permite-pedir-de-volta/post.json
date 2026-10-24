@@ -1,10 +1,9 @@
 {
-  "scheduled_at": "2026-10-23T13:00:00-03:00",
+  "scheduled_at": "2026-10-25T16:00:00-03:00",
   "type": "image",
   "media": [
     "capa.jpg"
   ],
   "caption": "Não é opinião minha. Está na Lei 14.790, a Lei das Bets.\n\nAposta feita por pessoa com ludopatia é nula de pleno direito. E a plataforma tem dever de identificar o jogador em descontrole e bloquear a conta. Quando ela vê 300 apostas por dia, depósito de madrugada, perda atrás de perda, e em vez de bloquear manda bônus e atendimento VIP, ela falhou no dever de segurança.\n\nÉ isso que a Justiça está punindo, caso a caso.\n\nDois pontos que confundem muita gente:\n— o valor da ação não é tudo que você depositou, é a perda líquida\n— o recorte é de 2024 em diante, que é quando a lei passa a valer\n\nAnálise gratuita, sem nada antecipado. O escritório só recebe se você ganhar.\n\nPerdeu mais de R$ 100 mil? Me chama na DM.\n\n#bets #apostasonline #ludopatia #vicioemapostas #direitodoconsumidor #recuperacaodevalores",
-  "status": "erro",
-  "error": "Erro da API (400): {'error': {'message': 'Media ID is not available', 'type': 'OAuthException', 'code': 9007, 'error_subcode': 2207027, 'is_transient': False, 'error_user_title': 'Cannot Publish', 'error_user_msg': 'The media is not ready for publishing, please wait for a moment', 'fbtrace_id': 'AAB-ldUr6Aor2XKgWXWbYbI'}}"
+  "status": "agendado"
 }
