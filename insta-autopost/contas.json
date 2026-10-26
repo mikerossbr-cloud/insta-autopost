@@ -1,4 +1,10 @@
 {
-  "mikerossbr3": {"secret": "IG_ACCESS_TOKEN", "padrao": true},
-  "mikerossbr2": {"secret": "IG_TOKEN_MIKEROSSBR2", "padrao": true}
+  "mikerossbr3": {
+    "secret": "IG_ACCESS_TOKEN",
+    "padrao": true
+  },
+  "mikerossbr2": {
+    "secret": "IG_TOKEN_MIKEROSSBR2",
+    "padrao": false
+  }
 }

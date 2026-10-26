@@ -10,5 +10,8 @@
     "story06.jpg",
     "story07.jpg"
   ],
-  "status": "agendado"
+  "status": "agendado",
+  "contas": [
+    "mikerossbr3"
+  ]
 }
