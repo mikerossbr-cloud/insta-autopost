@@ -10,8 +10,25 @@
     "story06.jpg",
     "story07.jpg"
   ],
-  "status": "publicando",
+  "status": "publicado",
   "contas": [
     "mikerossbr3"
-  ]
+  ],
+  "resultado": {
+    "mikerossbr3": {
+      "status": "publicado",
+      "instagram_media_id": "17996072046021330",
+      "published_at": "2026-10-26T23:03:40.278763+00:00",
+      "stories_publicados": [
+        "18113679263178510",
+        "17887184922624489",
+        "18076911719719545",
+        "18106507214304462",
+        "17896826049680252",
+        "18073928651772220",
+        "17996072046021330"
+      ]
+    }
+  },
+  "published_at": "2026-10-26T23:00:13.893217+00:00"
 }
