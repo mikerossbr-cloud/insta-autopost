@@ -10,10 +10,21 @@
     "story06.jpg",
     "story07.jpg"
   ],
-  "status": "publicando",
+  "status": "erro",
   "contas": [
     "mikerossbr2"
   ],
   "copia_de": "2026-10-26_2000-stories-o-que-te-trava",
-  "variacao": "legenda reescrita e arte com variação mínima (zoom 4%, tom mais quente)"
+  "variacao": "legenda reescrita e arte com variação mínima (zoom 4%, tom mais quente)",
+  "resultado": {
+    "mikerossbr2": {
+      "status": "erro",
+      "error": "Erro da API (400): {'error': {'message': 'The requested resource does not exist', 'type': 'OAuthException', 'code': 24, 'error_subcode': 2207006, 'is_transient': False, 'error_user_title': 'Media Not Found', 'error_user_msg': 'The media with 18,133,357,339,775,635 cannot be found.', 'fbtrace_id': 'AzvKH6s8v4cToNBmMQiRzfL'}}",
+      "stories_publicados": [
+        "18340616692256330",
+        "18130520101833851"
+      ]
+    }
+  },
+  "error": "@mikerossbr2: Erro da API (400): {'error': {'message': 'The requested resource does not exist', 'type': 'OAuthException', 'code': 24, 'error_subcode': 2207006, 'is_transient': False, 'error_user_title': 'Media Not Found', 'error_user_msg': 'The media with 18,133,357,339,775,635 cannot be found.', 'fbtrace_id': 'AzvKH6s8v4cToNBmMQiRzfL'}}"
 }
