@@ -318,11 +318,15 @@ def processar_conta(nome: str, token: str, stats: dict):
     meu_user = eu.get("username", nome)
     agora = datetime.now(timezone.utc)
     convs = ig.get("me/conversations", platform="instagram", fields="id,updated_time", limit=25)
+    lista = convs.get("data", [])
+    log(f"  conta conectada: id={'sim' if meus_ids else 'nao'}; conversas visíveis pela API: {len(lista)}")
+    stats["conversas_vistas"] = stats.get("conversas_vistas", 0) + len(lista)
     envios = 0
-    for c in convs.get("data", []):
+    for c in lista:
         if envios >= CONFIG["max_envios_por_rodada"]:
             break
         if "updated_time" in c and agora - parse_time(c["updated_time"]) > JANELA:
+            stats["fora_24h"] = stats.get("fora_24h", 0) + 1
             continue
         cid = anon(c["id"])
         try:
@@ -340,6 +344,7 @@ def processar_conta(nome: str, token: str, stats: dict):
 
         ultima = msgs[-1]
         if e_meu(ultima):
+            stats["ja_respondidas"] = stats.get("ja_respondidas", 0) + 1
             continue  # já respondido
         if agora - parse_time(ultima["created_time"]) > JANELA:
             continue  # fora da janela de 24h
