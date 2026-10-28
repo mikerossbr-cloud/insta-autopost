@@ -324,6 +324,22 @@ def diagnostico(ig: IG, eu: dict):
               ("{user_id}/conversations?platform=instagram", f"{uid}/conversations", {"platform": "instagram"}),
               ("me/conversations (sem platform)", "me/conversations", {}),
               ("me/conversations folder=inbox", "me/conversations", {"platform": "instagram", "folder": "inbox"})]
+    # inscrição da conta no app para eventos de mensagens
+    for metodo in ("GET", "POST"):
+        try:
+            params = {"access_token": ig.token}
+            if metodo == "POST":
+                params["subscribed_fields"] = "messages"
+            r = requests.request(metodo, f"{GRAPH}/me/subscribed_apps", params=params, timeout=60)
+            d = r.json() if r.content else {}
+            if "error" in d:
+                e = d["error"]
+                log(f"    subscribed_apps {metodo}: HTTP {r.status_code} erro code={e.get('code')} msg={str(e.get('message'))[:140]}")
+            else:
+                resumo = d if metodo == "POST" else [x.get("subscribed_fields") for x in d.get("data", [])]
+                log(f"    subscribed_apps {metodo}: HTTP {r.status_code} {str(resumo)[:160]}")
+        except Exception as ex:
+            log(f"    subscribed_apps {metodo}: falhou {str(ex)[:120]}")
     for nome, path, params in testes:
         params = dict(params, access_token=ig.token)
         try:
