@@ -1,9 +1,8 @@
 {
-  "modo": "desligado",
+  "modo": "ativo",
   "testadores": [],
   "contas": [
-    "mikerossbr3",
-    "mikerossbr2"
+    "mikerossbr3"
   ],
   "max_respostas_por_conversa": 4,
   "max_envios_por_rodada": 15
