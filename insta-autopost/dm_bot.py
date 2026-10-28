@@ -316,12 +316,36 @@ def decidir(info: dict, enviados: list):
 
 # ---------------------------------------------------------------- rodada
 
+def diagnostico(ig: IG, eu: dict):
+    """Testa variações da chamada de conversas e mostra só números e erros (sem conteúdo)."""
+    uid = str(eu.get("user_id", ""))
+    log(f"  diagnóstico: campos de /me = {sorted(eu.keys())}")
+    testes = [("me/conversations?platform=instagram", "me/conversations", {"platform": "instagram"}),
+              ("{user_id}/conversations?platform=instagram", f"{uid}/conversations", {"platform": "instagram"}),
+              ("me/conversations (sem platform)", "me/conversations", {}),
+              ("me/conversations folder=inbox", "me/conversations", {"platform": "instagram", "folder": "inbox"})]
+    for nome, path, params in testes:
+        params = dict(params, access_token=ig.token)
+        try:
+            r = requests.get(f"{GRAPH}/{path}", params=params, timeout=60)
+            d = r.json() if r.content else {}
+            if "error" in d:
+                e = d["error"]
+                log(f"    {nome}: HTTP {r.status_code} erro code={e.get('code')} sub={e.get('error_subcode')} msg={str(e.get('message'))[:140]}")
+            else:
+                log(f"    {nome}: HTTP {r.status_code} conversas={len(d.get('data', []))} chaves={sorted(d.keys())}")
+        except Exception as ex:
+            log(f"    {nome}: falhou {str(ex)[:120]}")
+
+
 def processar_conta(nome: str, token: str, stats: dict):
     ig = IG(token)
     eu = ig.get("me", fields="user_id,username")
     meus_ids = {str(eu.get("user_id", "")), str(eu.get("id", ""))} - {""}
     meu_user = eu.get("username", nome)
     agora = datetime.now(timezone.utc)
+    if CONFIG.get("diagnostico"):
+        diagnostico(ig, eu)
     convs = ig.get("me/conversations", platform="instagram", fields="id,updated_time", limit=25)
     lista = convs.get("data", [])
     log(f"  conta conectada: id={'sim' if meus_ids else 'nao'}; conversas visíveis pela API: {len(lista)}")

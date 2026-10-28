@@ -5,5 +5,6 @@
     "mikerossbr3"
   ],
   "max_respostas_por_conversa": 4,
-  "max_envios_por_rodada": 15
+  "max_envios_por_rodada": 15,
+  "diagnostico": true
 }
