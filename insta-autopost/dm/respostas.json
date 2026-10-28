@@ -1,8 +1,8 @@
 {
-  "triagem": "Oi! Aqui é o Elias, obrigado por me chamar.\n\nFunciona assim: a Lei das Bets considera nulas as apostas feitas por quem tem ludopatia, e por isso dá pra pedir na Justiça a devolução do que você perdeu. O escritório (BPIF Advogados) não cobra nada pra entrar com a ação, só recebe se a gente ganhar.\n\nPra eu saber se o seu caso se encaixa, me responde:\n1. Quanto você perdeu, mais ou menos, descontando o que sacou?\n2. Foi de 2024 pra cá?\n3. Foi em casa de aposta legalizada, com CNPJ no Brasil?\n4. Você já tem laudo de ludopatia?",
+  "triagem": "Olá, tudo bem? Obrigado por entrar em contato!\n\nSe você quer saber sobre a restituição de valores perdidos em bets: a fundamentação principal é que a Lei considera nulas as apostas feitas por quem tem ludopatia, e por isso dá pra pedir na Justiça a devolução do que você perdeu. Nós da BPIF não cobramos nada pra entrar com a ação, só recebemos se e quando você receber.\n\nPra eu saber se o seu caso se encaixa nos que atendemos, por favor, me responde:\n1. Você perdeu mais de R$ 100 mil de 2024 pra cá? (depósitos menos saques)\n2. Foi em casa de aposta legalizada, com CNPJ no Brasil?\n3. Você já tem laudo de ludopatia?\n\nSe você não se encaixar, não trabalhamos com ações dessa natureza, mas indicamos a advogada @adv.deboranicodemo. E se quiser conversar, desabafar com alguém que passa pelo mesmo problema, pode me chamar no WhatsApp (11) 93922-8828.\n\nGrande abraço, e espero que você já tenha conseguido parar de jogar! 🚀",
   "faltam": "Obrigado por me responder! Só me confirma mais isso:\n{itens}",
   "faltam_itens": {
-    "perda": "• Quanto você perdeu, mais ou menos, descontando o que sacou?",
+    "perda": "• Você perdeu mais de R$ 100 mil de 2024 pra cá? (depósitos menos saques)",
     "periodo": "• As perdas foram de 2024 pra cá?",
     "casa": "• Foi em casa de aposta legalizada, com CNPJ no Brasil?",
     "laudo": "• Você já tem laudo de ludopatia?"
@@ -14,7 +14,8 @@
   "nao_qualificado_motivos": {
     "perda": "No escritório a gente só consegue assumir casos acima de R$ 100 mil de perda líquida, porque abaixo disso as custas e o tempo de processo acabam consumindo o que você recuperaria.",
     "periodo": "No escritório a gente só consegue assumir perdas de 2024 pra cá, que é quando a Lei das Bets passou a valer.",
-    "casa": "No escritório a gente só consegue entrar com ação contra casas de aposta legalizadas, com CNPJ no Brasil, porque é preciso ter uma empresa aqui pra responder pelo processo."
+    "casa": "No escritório a gente só consegue entrar com ação contra casas de aposta legalizadas, com CNPJ no Brasil, porque é preciso ter uma empresa aqui pra responder pelo processo.",
+    "perda_periodo": "No escritório a gente só consegue assumir casos com perda acima de R$ 100 mil, de 2024 pra cá."
   },
   "valores_prazo": "A gente não cobra nada pra entrar com a ação, só cobra em caso de êxito, se ganharmos. O prazo e os detalhes variam de caso pra caso, e a gente explica tudo na análise individual pelo WhatsApp (11) 93922-8828.",
   "crise": "Sinto muito que você esteja passando por isso. Eu sei o quanto pesa, eu vivi isso por 10 anos. Você não está sozinho, e isso tem tratamento: procure um psicólogo ou psiquiatra. Se precisar conversar agora, liga 188 (CVV), é gratuito e funciona 24h. Desejo de verdade o melhor pra você.",

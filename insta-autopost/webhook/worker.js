@@ -97,12 +97,20 @@ function extrair(texto, antes) {
     const sim = /\b(sim|s|tenho|foi|foram|isso|claro|exato)\b/.test(resp);
     const nao = /\b(nao|n|nunca|nenhum|nenhuma)\b/.test(resp);
     const v = sim === nao ? null : sim;
-    if (m[1] === "1" && info.perda == null) {
+    if (m[1] === "1") {
       const vs = valores(/^\d+$/.test(resp.trim()) ? resp + " mil" : resp);
       if (vs.length) info.perda = Math.max(...vs);
-    } else if (m[1] === "2" && v != null) info.periodo = v;
-    else if (m[1] === "3" && v != null) info.casa = v;
-    else if (m[1] === "4" && v != null) info.laudo = v;
+      else if (v === true) { info.perda = Math.max(info.perda || 0, 100000); info.periodo = true; }
+      else if (v === false) info.q1 = false;
+    } else if (m[1] === "2" && v != null) info.casa = v;
+    else if (m[1] === "3" && v != null) info.laudo = v;
+  }
+  // respostas em sequência sem número: "sim, sim, não"
+  const seq = t.trim().match(/^(sim|s|nao|n)[\s,.;/-]+(sim|s|nao|n)[\s,.;/-]+(sim|s|nao|n)[\s.!]*$/);
+  if (seq) {
+    const b = seq.slice(1, 4).map((x) => x.startsWith("s"));
+    if (b[0]) { info.perda = Math.max(info.perda || 0, 100000); info.periodo = true; } else info.q1 = false;
+    info.casa = b[1]; info.laudo = b[2];
   }
   const palavras = t.match(/\w+/g) || [];
   info.fechamento = palavras.length > 0 && palavras.length <= 3 && palavras.every((p) => FECHO.has(p));
@@ -120,7 +128,8 @@ function decidir(info, enviados, TXT) {
   if (info.ofensa) return ja.has("ofensa") ? [null, null] : ["ofensa", TXT.ofensa];
 
   let motivo = null;
-  if (typeof info.perda === "number" && info.perda < 100000) motivo = "perda";
+  if (info.q1 === false) motivo = "perda_periodo";
+  else if (typeof info.perda === "number" && info.perda < 100000) motivo = "perda";
   else if (info.periodo === false) motivo = "periodo";
   else if (info.casa === false) motivo = "casa";
   if (motivo) return ["nao_qualificado", TXT.nao_qualificado.replace("{motivo}", TXT.nao_qualificado_motivos[motivo])];
@@ -134,8 +143,8 @@ function decidir(info, enviados, TXT) {
   if (info.fechamento) return [null, null];
   if (!ja.has("faltam")) {
     const faltam = [];
-    if (typeof info.perda !== "number") faltam.push("perda");
-    if (info.periodo == null) faltam.push("periodo");
+    if (typeof info.perda !== "number") faltam.push("perda");  // a pergunta 1 já inclui o período
+    else if (info.periodo == null) faltam.push("periodo");
     if (info.casa == null) faltam.push("casa");
     if (info.laudo == null) faltam.push("laudo");
     if (faltam.length) return ["faltam", TXT.faltam.replace("{itens}", faltam.map((f) => TXT.faltam_itens[f]).join("\n"))];
