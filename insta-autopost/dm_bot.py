@@ -135,10 +135,106 @@ Responda apenas com um JSON válido, sem texto antes ou depois, com estas chaves
 }"""
 
 
+# ---------------------------------------------------------------- palavras-chave (sem IA)
+
+def _norm(s: str) -> str:
+    import unicodedata
+    s = unicodedata.normalize("NFKD", (s or "").lower())
+    return "".join(c for c in s if not unicodedata.combining(c))
+
+
+def _tem(t: str, termos) -> bool:
+    return any(x in t for x in termos)
+
+
+CRISE = ["me matar", "suicid", "tirar minha vida", "tirar a minha vida", "nao aguento mais",
+         "quero morrer", "vontade de morrer", "acabar com tudo", "acabar com a minha vida",
+         "me machucar", "sumir de vez", "nao quero mais viver", "melhor morto"]
+OFENSA = ["golpista", "picareta", "mentiroso", "vagabundo", "safado", "pilantra", "charlatao",
+          "estelionatario", "isso e golpe", "isso eh golpe", "e golpe?", "golpe isso", "isso e fraude",
+          "voces sao golpe", "vcs sao golpe", "conversa fiada", "papo furado"]
+DINHEIRO = ["empresta", "emprestimo", "me manda um pix", "manda um pix", "me ajuda com dinheiro",
+            "preciso de dinheiro", "me arruma um dinheiro", "pode me ajudar com um valor"]
+VALORES = ["quanto custa", "quanto cobra", "quanto voces cobram", "quanto vc cobra", "honorario",
+           "porcentagem", "quanto e o servico", "valor do servico", "quanto tempo", "demora",
+           "prazo", "cobra quanto"]
+CASAS_LEGAIS = ["betano", "bet365", "sportingbet", "superbet", "kto", "novibet", "betnacional",
+                "pixbet", "esportes da sorte", "estrela bet", "estrelabet"]
+LEGAL_SIM = ["legalizada", "legalizado", "regulamentada", "regularizada", "licenciada", "com cnpj",
+             "tinha cnpj", "brasileira"]
+LEGAL_NAO = ["ilegal", "sem cnpj", "estrangeir", "clandestin", "gringa", "gringo", "nao tinha cnpj",
+             "nao era legal"]
+APOSTANDO = ["ainda aposto", "ainda jogo", "continuo apostando", "continuo jogando",
+             "ainda estou apostando", "ainda to apostando", "ainda tô apostando"]
+SIM = re.compile(r"\b(sim|s|tenho|foi|foram|isso|claro|exato|yes)\b")
+NAO = re.compile(r"\b(nao|n|nunca|nenhum|nenhuma)\b")
+
+
+def _valores(t: str) -> list:
+    vals = []
+    for m in re.finditer(r"(\d+(?:[.,]\d+)?)\s*(milhoes|milhao|mi)\b", t):
+        vals.append(float(m.group(1).replace(",", ".")) * 1_000_000)
+    for m in re.finditer(r"(\d+(?:[.,]\d+)?)\s*(mil|k)\b", t):
+        vals.append(float(m.group(1).replace(",", ".")) * 1_000)
+    for m in re.finditer(r"r\$\s*(\d{1,3}(?:\.\d{3})+|\d+)(?:,\d{2})?", t):
+        vals.append(float(m.group(1).replace(".", "")))
+    for m in re.finditer(r"\b(\d{1,3}(?:\.\d{3})+)(?:,\d{2})?\b", t):
+        vals.append(float(m.group(1).replace(".", "")))
+    return [v for v in vals if v >= 1000]
+
+
+def extrair_palavras(textos_pessoa: list) -> dict:
+    t = _norm(" \n ".join(textos_pessoa))
+    info = {"crise": _tem(t, CRISE), "ofensa_ou_golpe": _tem(t, OFENSA),
+            "pedido_dinheiro": _tem(t, DINHEIRO), "pergunta_valores_prazo": _tem(t, VALORES),
+            "perda_liquida_reais": None, "desde_2024": None, "casa_legalizada": None,
+            "tem_laudo": None, "ainda_apostando": _tem(t, APOSTANDO), "fora_do_assunto": False}
+    vals = _valores(t)
+    if vals:
+        info["perda_liquida_reais"] = max(vals)
+    anos = [int(a) for a in re.findall(r"\b(20[12]\d)\b", t)]
+    if any(a >= 2024 for a in anos) or _tem(t, ["ano passado", "esse ano", "este ano", "ate hoje",
+                                                  "ate agora", "ate o fechamento", "ate fechar"]):
+        info["desde_2024"] = True
+    elif anos:
+        info["desde_2024"] = False
+    if _tem(t, LEGAL_NAO):
+        info["casa_legalizada"] = False
+    elif _tem(t, LEGAL_SIM) or _tem(t, CASAS_LEGAIS):
+        info["casa_legalizada"] = True
+    for frase in re.split(r"[.\n!?;]", t):
+        if "laudo" in frase or "diagnost" in frase:
+            info["tem_laudo"] = not bool(re.search(r"\b(nao|sem|nunca|nenhum)\b", frase))
+    # respostas numeradas ao questionário: "1. 150 mil / 2. sim / 3. sim / 4. nao"
+    for linha in t.splitlines():
+        m = re.match(r"\s*([1-4])\s*[).:\-–]?\s*(.+)", linha)
+        if not m:
+            continue
+        n, resp = m.group(1), m.group(2)
+        sim, nao = bool(SIM.search(resp)), bool(NAO.search(resp))
+        valor = None if sim == nao else sim
+        if n == "1" and info["perda_liquida_reais"] is None:
+            v = _valores(resp + " mil" if re.fullmatch(r"\d+", resp.strip()) else resp)
+            info["perda_liquida_reais"] = max(v) if v else None
+        elif n == "2" and valor is not None and info["desde_2024"] is None:
+            info["desde_2024"] = valor
+        elif n == "3" and valor is not None and info["casa_legalizada"] is None:
+            info["casa_legalizada"] = valor
+        elif n == "4" and valor is not None and info["tem_laudo"] is None:
+            info["tem_laudo"] = valor
+    ultima = _norm(textos_pessoa[-1] if textos_pessoa else "")
+    palavras = re.findall(r"\w+", ultima)
+    if len(palavras) <= 3 and all(p in {"ok", "okay", "obrigado", "obrigada", "valeu", "vlw", "blz",
+                                        "beleza", "show", "top", "certo", "entendi", "obg", "tmj"}
+                                  for p in palavras):
+        info["fora_do_assunto"] = True
+    return info
+
+
 def extrair(textos_pessoa: list) -> dict:
     chave = os.environ.get("ANTHROPIC_API_KEY", "")
     if not chave:
-        raise RuntimeError("Falta ANTHROPIC_API_KEY")
+        return extrair_palavras(textos_pessoa)  # sem chave: modo palavras-chave
     hoje = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y")
     conteudo = "\n".join(f"- {t}" for t in textos_pessoa if t)
     r = requests.post(ANTHROPIC_URL, timeout=60, headers={
