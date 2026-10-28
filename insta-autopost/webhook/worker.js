@@ -250,8 +250,14 @@ export default {
     let dados;
     try { dados = JSON.parse(corpo); } catch { return new Response("json inválido", { status: 400 }); }
     const tarefas = [];
+    if (!dados.entry && dados.field === "messages") dados.entry = [{ id: String(dados.value?.recipient?.id || ""), messaging: [] }];
+    console.log(`POST recebido: ${(dados.entry || []).length} entrada(s)`);
     for (const entry of dados.entry || []) {
-      for (const ev of entry.messaging || []) {
+      // formato real (entry.messaging) e formato do botão "Teste" da Meta (entry.changes / field+value)
+      const eventos = [...(entry.messaging || []),
+        ...(entry.changes || []).filter((c) => c.field === "messages").map((c) => c.value)];
+      if (dados.field === "messages" && dados.value) eventos.push(dados.value);
+      for (const ev of eventos) {
         tarefas.push(tratar(ev, String(entry.id), env)
           .then((r) => console.log(`[${String(ev.sender?.id || "").slice(-4)}] ${r}`))
           .catch((e) => console.log(`erro: ${String(e).slice(0, 200)}`)));
