@@ -12,6 +12,7 @@
  * Variáveis (Cloudflare → Worker → Settings → Variables):
  *   VERIFY_TOKEN  (segredo)  texto combinado com a Meta na configuração do webhook
  *   APP_SECRET    (segredo)  "Chave secreta do app" (Configurações do app → Básico)
+ *   IG_APP_SECRET (segredo)  "Chave secreta do app do Instagram" (API com login do Instagram)
  *   IG_TOKEN      (segredo)  token da conta (ou TOKEN_<id da conta> para várias contas)
  * KV namespace ligado como STATE.
  */
@@ -144,14 +145,17 @@ function decidir(info, enviados, TXT) {
 
 // ------------------------------------------------------------ Meta
 
-async function assinaturaValida(req, corpo, segredo) {
+async function assinaturaValida(req, corpo, segredos) {
   const sig = req.headers.get("x-hub-signature-256") || "";
-  if (!segredo || !sig.startsWith("sha256=")) return false;
-  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(segredo),
-    { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-  const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(corpo));
-  const hex = [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, "0")).join("");
-  return hex === sig.slice(7);
+  if (!sig.startsWith("sha256=")) return false;
+  for (const segredo of segredos.filter(Boolean)) {
+    const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(segredo),
+      { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+    const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(corpo));
+    const hex = [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    if (hex === sig.slice(7)) return true;
+  }
+  return false;
 }
 
 async function enviar(token, para, texto) {
@@ -239,7 +243,10 @@ export default {
     }
     if (req.method !== "POST") return new Response("método não permitido", { status: 405 });
     const corpo = await req.text();
-    if (!(await assinaturaValida(req, corpo, env.APP_SECRET))) return new Response("assinatura inválida", { status: 401 });
+    if (!(await assinaturaValida(req, corpo, [env.APP_SECRET, env.IG_APP_SECRET]))) {
+      console.log("assinatura inválida: confira APP_SECRET / IG_APP_SECRET");
+      return new Response("assinatura inválida", { status: 401 });
+    }
     let dados;
     try { dados = JSON.parse(corpo); } catch { return new Response("json inválido", { status: 400 }); }
     const tarefas = [];
