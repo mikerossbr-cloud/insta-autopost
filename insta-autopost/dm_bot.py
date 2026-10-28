@@ -43,7 +43,8 @@ PAUSA_ENVIO = float(os.environ.get("DM_PAUSA", "4"))
 JANELA = timedelta(hours=23)  # margem dentro das 24h permitidas pela Meta
 
 # Conversas "encerradas" para o robô: depois destes textos ele não responde mais
-ENCERRA = {"qualificado", "falta_laudo", "nao_qualificado", "crise"}
+ENCERRA = {"qualificado", "falta_laudo", "nao_qualificado", "crise", "parar"}
+PARAR = re.compile(r"^\s*(parar|pare|para|stop|sair|cancelar)\s*[.!]*\s*$", re.I)
 
 
 def anon(s: str) -> str:
@@ -104,7 +105,7 @@ def prefixo(chave: str) -> str:
 
 PREFIXOS = {k: prefixo(k) for k in
             ["triagem", "faltam", "qualificado", "falta_laudo", "nao_qualificado",
-             "valores_prazo", "crise", "ofensa", "pedido_dinheiro"]}
+             "valores_prazo", "crise", "ofensa", "pedido_dinheiro", "parar"]}
 
 
 def identificar_texto(texto: str):
@@ -257,6 +258,10 @@ def extrair(textos_pessoa: list) -> dict:
 def decidir(info: dict, enviados: list):
     """Devolve (chave_da_resposta, texto) ou (None, None) para ficar em silêncio."""
     ja = set(enviados)
+    if "parar" in ja:
+        return None, None  # a pessoa pediu para parar: nunca mais responde
+    if info.get("parar"):
+        return "parar", TXT["parar"]
     if info.get("crise") and "crise" not in ja:
         return "crise", TXT["crise"]  # crise vale mesmo em conversa já encerrada
     if ja & ENCERRA:
@@ -370,6 +375,7 @@ def processar_conta(nome: str, token: str, stats: dict):
         todas_da_pessoa = [m.get("message", "") for m in msgs if not e_meu(m)]
         try:
             info = extrair(todas_da_pessoa[-12:])
+            info["parar"] = any(PARAR.match(x or "") for x in textos)
         except Exception as e:
             log(f"  [{cid}] erro na IA: {str(e)[:150]}")
             stats["erros"] += 1
