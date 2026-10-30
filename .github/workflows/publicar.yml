@@ -29,6 +29,7 @@ jobs:
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_TOKEN_MIKEROSSBR2: ${{ secrets.IG_TOKEN_MIKEROSSBR2 }}
+          IG_TOKEN_DAVISMKT: ${{ secrets.IG_TOKEN_DAVISMKT }}
           MEDIA_BASE_URL: ${{ vars.MEDIA_BASE_URL || format('https://{0}.github.io/{1}/insta-autopost/posts', github.repository_owner, github.event.repository.name) }}
         run: python insta-autopost/publish.py
 

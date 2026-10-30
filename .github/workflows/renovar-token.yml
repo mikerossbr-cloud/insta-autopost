@@ -19,6 +19,7 @@ jobs:
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_TOKEN_MIKEROSSBR2: ${{ secrets.IG_TOKEN_MIKEROSSBR2 }}
+          IG_TOKEN_DAVISMKT: ${{ secrets.IG_TOKEN_DAVISMKT }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           REPO: ${{ github.repository }}
         run: |

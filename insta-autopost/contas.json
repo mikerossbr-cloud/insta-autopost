@@ -6,5 +6,9 @@
   "mikerossbr2": {
     "secret": "IG_TOKEN_MIKEROSSBR2",
     "padrao": false
+  },
+  "davismkt": {
+    "secret": "IG_TOKEN_DAVISMKT",
+    "padrao": false
   }
 }
