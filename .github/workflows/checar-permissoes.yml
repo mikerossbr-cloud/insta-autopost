@@ -1,0 +1,27 @@
+# Teste manual: o que o token de uma conta consegue fazer (não imprime conteúdo nenhum)
+name: Checar permissões do token
+
+on:
+  workflow_dispatch:
+    inputs:
+      conta:
+        description: "Conta (como em contas.json)"
+        default: "davismkt"
+
+permissions:
+  contents: read
+
+jobs:
+  checar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Testar
+        env:
+          CONTA: ${{ inputs.conta }}
+          IG_TOKEN_DAVISMKT: ${{ secrets.IG_TOKEN_DAVISMKT }}
+        run: python insta-autopost/checar_permissoes.py
