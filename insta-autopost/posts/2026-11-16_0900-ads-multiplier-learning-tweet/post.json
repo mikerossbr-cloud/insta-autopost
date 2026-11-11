@@ -1,0 +1,12 @@
+{
+  "scheduled_at": "2026-11-16T09:00:00-03:00",
+  "type": "auto",
+  "media": [
+    "01.jpg"
+  ],
+  "caption": "Your ad isn't bad. It has 11 conversions and Meta's learning phase needs about 50 before delivery stabilises.\n\nThis is the most expensive beginner mistake in Meta Ads, and it costs nothing to fix: you are making decisions on samples too small to mean anything, then changing the ad, which resets the learning, which guarantees you never get a clean read.\n\nWhat that looks like in practice:\n\n→ Day 2: \"CPL is high, let me change the creative\"\n→ Day 3: learning restarts\n→ Day 5: \"CPL is high, let me change the audience\"\n→ Day 6: learning restarts\n→ Week 3: no campaign has ever finished learning\n\nThe fix is boring. Set a budget you can leave alone, give it enough conversions to exit learning, write down beforehand what number would make you kill it, and then actually wait.\n\nPatience is a targeting setting. Nobody sells it as one.\n\n📌 DM me the word AUDIT and I'll send you the 20-minute version, or grab it from the link in my bio.\n\n#instagramtips #metaads #leadgeneration #digitalmarketing #socialmediamarketing",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}
