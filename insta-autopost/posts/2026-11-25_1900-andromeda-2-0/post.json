@@ -1,0 +1,12 @@
+{
+  "scheduled_at": "2026-11-25T19:00:00-03:00",
+  "type": "reel",
+  "media": [
+    "reel.mp4"
+  ],
+  "caption": "Meta rebuilt the part of the ads system that decides which of your ads are even allowed to compete.\n\nRetrieval runs before the auction. Until recently it walked a tree and only opened the branches that looked promising, so whole parts of your library were never scored.\n\nOn October 28 Meta published the next generation of Andromeda. It scores every eligible ad in the candidate pool and surfaces the top candidates at over one billion ads per second on a single GPU server, about 100x the 2024 system.\n\nHere is what that changes for you.\n\nTwenty versions of one idea are twenty candidates that score roughly the same, twenty times. Twenty different ideas are twenty different chances to match twenty different people.\n\nNew concepts beat new edits.\n\nTwo things worth saying out loud. \"Eligible\" means ads that pass index matching for that person, not every ad running on Meta. And Meta prescribes no creative quota, so anyone telling you that you need 20 to 30 creatives is adding that part themselves.\n\nEvery number here is Meta's own, from their engineering post on October 28, 2026.\n\nFollow @davis.mkt for more like this. If you want this implemented in your business, whatever its size, DM me or tap the link in bio to book a 20 minute audit.\n\n#metaads #facebookads #performancemarketing #paidsocial #adcreative #digitalmarketing #mediabuying #marketingstrategy",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}
