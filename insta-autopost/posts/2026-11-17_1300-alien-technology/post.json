@@ -1,0 +1,12 @@
+{
+  "scheduled_at": "2026-11-17T13:00:00-03:00",
+  "type": "reel",
+  "media": [
+    "reel.mp4"
+  ],
+  "caption": "Every NVIDIA chip you have ever heard about was printed by a machine like this one. NVIDIA designs them. TSMC builds them. And this is the machine that does the printing.\n\nIt starts with a drop of molten tin, 25 microns across, falling into a vacuum chamber.\n\nA laser hits it twice. The first pulse flattens it. The second turns it into plasma at 220,000 degrees, about forty times hotter than the surface of the Sun. This happens 50,000 times every second.\n\nAll of that, to make light 13.5 nanometres long. Light that short does not pass through glass, it gets absorbed, so the machine that uses it has no lenses at all. It is built entirely from mirrors, each one so flat that scaled to the size of Germany its tallest bump would be under a millimetre.\n\nEach mirror gives back about 70 percent of the light. After ten of them, only a few percent reaches the wafer. And it still has to land in the right place, to just over one nanometre. About five silicon atoms. Your fingernail grows that much every second.\n\nA hundred thousand parts. Three thousand cables. Forty thousand bolts.\n\nNobody got here by guessing. Every number was measured, then measured again.\n\nThat is the part most businesses skip. They run ads on a feeling and call the result luck.\n\nEvery figure here is published by ASML, Intel and Zeiss.\n\nWant that kind of discipline on your growth? Send us a DM. Company or local business, we start by measuring what you already have.\n\n#euv #asml #semiconductors #engineering #technology #digitalmarketing #growthmarketing #paidsocial #smallbusiness #localbusiness",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}
