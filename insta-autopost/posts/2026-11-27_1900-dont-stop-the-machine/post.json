@@ -1,0 +1,12 @@
+{
+  "scheduled_at": "2026-11-27T19:00:00-03:00",
+  "type": "reel",
+  "media": [
+    "reel.mp4"
+  ],
+  "caption": "Claude Code is halfway through a refactor. You have a question. So you interrupt it, and now it is answering you instead of working.\n\nThere is a command that fixes this and almost nobody uses it.\n\n/btw. As in, by the way.\n\nType /btw followed by your question. The answer comes back in an overlay you dismiss with Escape. Three things happen, and all three matter.\n\nThe task never stops. It is single turn and it runs while the main work keeps going.\n\nThe question never enters your conversation history. Neither does the answer. Your context stays clean.\n\nAnd it has no tools. It only knows what is already in the session. So ask it about work Claude has already seen, not about something it would have to go and find.\n\nIf the answer turns out to need real work, press f. It forks the question and the answer into a background subagent that does have tools.\n\nEvery detail here is from Anthropic's own docs and the Claude Code power user tips page.\n\nNow the part that is not about code.\n\nThe habit worth stealing is this one: do not stop something that is already running to ask it a question. Most businesses do the opposite. They pause the campaign to check the campaign. They stop the machine, look inside, and call the pause \"being careful\".\n\nThe teams that grow build a side channel instead. Questions go to the side. The work stays on the rails.\n\nWant that built into your growth? Send us a DM. Company or local business, we start by measuring what is already running.\n\n#claudecode #ai #developertools #productivity #buildinpublic #digitalmarketing #growthmarketing #smallbusiness",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}
