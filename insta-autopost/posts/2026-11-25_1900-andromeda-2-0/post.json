@@ -8,5 +8,13 @@
   "contas": [
     "davismkt"
   ],
-  "status": "publicando"
+  "status": "publicado",
+  "resultado": {
+    "davismkt": {
+      "status": "publicado",
+      "instagram_media_id": "18133545103835206",
+      "published_at": "2026-11-26T02:28:57.661360+00:00"
+    }
+  },
+  "published_at": "2026-11-26T02:27:20.141501+00:00"
 }
