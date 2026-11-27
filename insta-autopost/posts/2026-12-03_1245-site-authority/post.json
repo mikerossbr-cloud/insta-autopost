@@ -1,0 +1,16 @@
+{
+  "scheduled_at": "2026-12-03T12:45:00-03:00",
+  "type": "carousel",
+  "media": [
+    "01.jpg",
+    "02.jpg",
+    "03.jpg",
+    "04.jpg",
+    "05.jpg"
+  ],
+  "caption": "For years Google's spokespeople said there is no domain authority. The leaked internal documentation contains siteAuthority, sitting inside CompressedQualitySignals.\n\n\"Many of their claims directly contradict public statements made by Googlers over the years.\" — Rand Fishkin, co-founder of SparkToro and founder of Moz, publishing his analysis on 27 May 2024.\n\nGoogle confirmed two days later that the documents were genuine.\n\nWhat it changes for you: a new domain is not only competing on how good the content is. It is competing against a site-level score it has not had time to build.\n\nThat is the real reason month three of SEO looks like nothing is happening, and why the people who quit at month four are the ones who paid for all the setup and none of the compounding.\n\nIf someone sold you SEO with a 90-day promise, this is the document that explains why it did not land.\n\nSource: Fishkin (SparkToro) and Mike King (iPullRank), analyses of the leaked Content Warehouse API, 27–28 May 2024; Google confirmed authenticity 29 May 2024.\n\n#seo #googleseo #organictraffic #contentstrategy #digitalmarketing #localseo #smallbusinessmarketing #searchmarketing #marketingstrategy #contentmarketing",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}

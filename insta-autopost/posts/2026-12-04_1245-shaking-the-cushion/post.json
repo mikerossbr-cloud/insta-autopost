@@ -1,0 +1,16 @@
+{
+  "scheduled_at": "2026-12-04T12:45:00-03:00",
+  "type": "carousel",
+  "media": [
+    "01.jpg",
+    "02.jpg",
+    "03.jpg",
+    "04.jpg",
+    "05.jpg"
+  ],
+  "caption": "\"Shaking the cushion.\"\n\nThat is how Google staff described tuning the ad auction when revenue was running behind target. The phrase came from Jerry Dischler's own 2019 emails, shown by DOJ attorneys in open court.\n\nContext: every year since 2012, Google's search ad revenue growth had been in the \"high teens\". That growth is a promise to the market, and the auction is one of the levers that keeps it.\n\nHere is the part worth internalising. The auction is not a neutral marketplace that happens to arrive at a price. It is a product, owned by a company, with revenue targets attached to it.\n\nYou would never plan a year assuming your main supplier will never raise prices. Plan the ad account the same way: know what your cost per lead can rise to before the job stops being worth taking, and know it before it happens.\n\nSource: emails entered as evidence, US v. Google, September 2023.\n\n#googleads #ppc #paidtraffic #marketingbudget #adspend #digitalmarketing #smallbusinessmarketing #localbusinessmarketing #marketingstrategy #cpc",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}

@@ -1,0 +1,16 @@
+{
+  "scheduled_at": "2026-12-02T12:45:00-03:00",
+  "type": "carousel",
+  "media": [
+    "01.jpg",
+    "02.jpg",
+    "03.jpg",
+    "04.jpg",
+    "05.jpg"
+  ],
+  "caption": "A Google internal document, entered as evidence, on what keyword expansion does to advertisers:\n\n\"may see an increase in cost because they are targeting more searches than they were previously.\"\n\nGoogle's own documentation, saying plainly that widening which searches your keywords match raises what you pay. The setting is on by default in most new campaigns.\n\nDo this today. Open your search terms report — the terms, not the keywords — for last month. Sort by cost. Then add up every term you would never have chosen to bid on.\n\nIn most local accounts we audit, it is between a fifth and a third of the spend. That money is not lost to bad luck. It is lost to a default.\n\nNegatives are boring work. They are also the highest-return hour in a small ad account.\n\nSource: internal Google document, US v. Google, federal antitrust trial, 2023.\n\n#googleads #ppc #broadmatch #paidtraffic #adspend #searchmarketing #smallbusinessmarketing #localbusinessmarketing #leadgeneration #digitalmarketing",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}

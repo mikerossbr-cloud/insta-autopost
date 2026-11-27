@@ -1,0 +1,16 @@
+{
+  "scheduled_at": "2026-11-28T12:45:00-03:00",
+  "type": "carousel",
+  "media": [
+    "01.jpg",
+    "02.jpg",
+    "03.jpg",
+    "04.jpg",
+    "05.jpg"
+  ],
+  "caption": "\"We tend not to tell advertisers about pricing changes.\"\n\nThat is Jerry Dischler, Google's VP and GM of Ads, under oath, in the federal antitrust trial in September 2023.\n\nHe confirmed Google sometimes raises auction prices by 5% to 10% without telling anyone. Internally the adjustments are called \"tunings\". He added that a 15% rise would be \"dangerous\", because advertisers would leave.\n\nSo the next time your cost per click climbs and you go hunting through Quality Score, match types and seasonality — some of that movement was never in your account.\n\nThis is not a reason to leave Google. Search intent is still the best demand there is. It is a reason to benchmark the thing Google cannot tune: your cost per booked job. If that number holds while CPC drifts, you are fine. If it moves with CPC, you have no insulation.\n\nSource: Bloomberg / eMarketer coverage of Dischler's testimony, US v. Google, Sept 2023.\n\n#googleads #ppc #paidtraffic #digitalmarketing #localbusinessmarketing #marketingstrategy #smallbusinessmarketing #adspend #leadgeneration #searchmarketing",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}

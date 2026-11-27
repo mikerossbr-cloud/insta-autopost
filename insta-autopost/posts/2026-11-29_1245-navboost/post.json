@@ -1,0 +1,16 @@
+{
+  "scheduled_at": "2026-11-29T12:45:00-03:00",
+  "type": "carousel",
+  "media": [
+    "01.jpg",
+    "02.jpg",
+    "03.jpg",
+    "04.jpg",
+    "05.jpg"
+  ],
+  "caption": "Google said for years that clicks are not a ranking signal.\n\nInside the leaked Content Warehouse API, in a system called NavBoost: goodClicks. badClicks. lastLongestClicks.\n\n2,596 modules. 14,014 attributes. The leak contradicted public Google statements on five fronts — domain authority, click signals, Chrome data, a sandbox for new sites, and dwell time.\n\nThe practical read is not \"clicks are a hack\". It is that ranking is not only about earning the click, it is about what happens after it. Someone who lands, bounces in five seconds and clicks the next result is a negative signal that feeds back into where you sit.\n\nWhich means the page matters more than the title tag. Load speed, the first screen, whether the thing you promised in the search result is actually there above the fold.\n\nMost local sites we audit rank fine and convert badly. This is why that gets worse over time instead of staying flat.\n\nSource: leaked Google Content Warehouse API, May 2024; technical analysis by Mike King (iPullRank), published 28 May 2024.\n\n#seo #googleseo #organictraffic #navboost #websitedesign #localseo #contentstrategy #digitalmarketing #smallbusinessmarketing #conversionrate",
+  "contas": [
+    "davismkt"
+  ],
+  "status": "agendado"
+}
